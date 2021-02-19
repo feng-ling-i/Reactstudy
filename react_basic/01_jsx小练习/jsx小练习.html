@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="text"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于把jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        const data = ['English', 'Math', 'Chanese'];
+        // 创建虚拟DOM
+        // 标签中混入JS表达式要用{}
+        const VDOM = (
+            <div>
+                <h1>要学习的科目有很多</h1>
+                <ul>{
+                    data.map((item, index) => {
+                        return <li key={index}>{item}</li>;
+                    })
+                }
+                </ul>
+            </div>)
+        // 把虚拟DOM渲染到浏览器中
+        ReactDOM.render(VDOM, document.querySelector('.text'));
+    </script>
+</body>
+
+</html>

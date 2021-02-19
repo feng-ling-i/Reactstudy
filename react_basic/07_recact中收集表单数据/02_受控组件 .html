@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- React最推荐使用的方法 -->
+
+<body>
+    <div class="text"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于把jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        //  创建类式组件 首字母必须大写 必须继承React.Component
+        class Login extends React.Component {
+            state = {
+                name: '',
+                password: ''
+            }
+            savename = (event) => {
+                this.setState({ name: event.target.value })
+            }
+            savepassword = (event) => {
+                this.setState({ password: event.target.value })
+            }
+            handlesumbit = (event) => {
+                //阻止提交表单的默认行为（提交时刷新页面）
+                event.preventDefault();
+                const { name, password } = this.state
+                alert(`用户名是${name},密码是${password}`)
+
+            }
+            render() {
+                return (
+                    <form action="" method="get" onSubmit={this.handlesumbit}>
+                        请输入用户名:<input type="text" onChange={this.savename} name="user" id="" />
+                        请输入密码:  <input type="password" onChange={this.savepassword} name="password" />
+                        <button>登录</button>
+                    </form>
+                )
+            }
+        }
+        // 渲染组件到页面 标签必须闭合
+        ReactDOM.render(<Login />, document.querySelector('.text'));
+        //1.react解析组件标签 找到了MyComponent组件
+        //2.发现了组件是使用类调用的，随后new出该类的实例，并通过该实例调用到原型对象的render方法。
+        //3.将render返回的虚拟DOM转化为正式DOM，呈现到页面上
+    </script>
+</body>
+
+</html>

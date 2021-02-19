@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- React最推荐使用的方法 -->
+
+<body>
+    <div class="text"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于把jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        //  创建类式组件 首字母必须大写 必须继承React.Component
+        class Life extends React.Component {
+            state = { opacity: 1 }
+            death = () => {
+                //卸载组件
+                ReactDOM.unmountComponentAtNode(document.querySelector('.text'));
+            }
+            // 组件挂载完调用
+            componentDidMount() {
+                this.timer = setInterval(() => {
+
+                    let { opacity } = this.state
+                    opacity -= 0.1
+                    if (opacity <= 0) opacity = 1
+                    this.setState({ opacity })
+                }, 200);
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h1 style={{ opacity: this.state.opacity }}>学不下去了</h1>
+                        <button onClick={this.death}>那不学了</button>
+                    </div>
+                )
+            }
+        }
+        // 渲染组件到页面 标签必须闭合
+        ReactDOM.render(<Life />, document.querySelector('.text'));
+        //1.react解析组件标签 找到了MyComponent组件
+        //2.发现了组件是使用类调用的，随后new出该类的实例，并通过该实例调用到原型对象的render方法。
+        //3.将render返回的虚拟DOM转化为正式DOM，呈现到页面上
+    </script>
+</body>
+
+</html>

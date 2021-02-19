@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- React最推荐使用的方法 -->
+
+<body>
+    <div class="text"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于把jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        //  创建类式组件 首字母必须大写 必须继承React.Component
+        class Demo extends React.Component {
+            // React.createRef()调用后可以返回一个容器，该容器可以存储当前被ref标记的节点
+            myref1 = React.createRef();
+            myref2 = React.createRef();
+            //必须重写render方法
+            //render在类的原型对象上，供实例化对象使用
+            show1 = () => {
+                alert(this.myref1.current.value)
+            }
+            show2 = () => {
+                alert(event.target.value)
+            }
+            render() {
+                return (
+                    <div>
+                        <input ref={this.myref1} type="text" placeholder="点击按钮提示数据" />
+                        <button onClick={this.show1}>点击</button>
+                        <input onBlur={this.show2} type="text" placeholder="失去焦点提示数据" />
+                    </div>
+                )
+            }
+        }
+        // 渲染组件到页面 标签必须闭合
+        ReactDOM.render(<Demo />, document.querySelector('.text'));
+        //1.react解析组件标签 找到了MyComponent组件
+        //2.发现了组件是使用类调用的，随后new出该类的实例，并通过该实例调用到原型对象的render方法。
+        //3.将render返回的虚拟DOM转化为正式DOM，呈现到页面上
+    </script>
+</body>
+
+</html>

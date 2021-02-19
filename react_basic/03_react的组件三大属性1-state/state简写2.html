@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="text"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于把jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        //  创建类式组件 首字母必须大写 必须继承React.Component
+        class Wheather extends React.Component {
+            state = { ishot: true };
+            render() {
+                return <h2 onClick={() => {
+                    this.setState({ ishot: !this.state.ishot })
+                }}> 今天天气很{this.state.ishot ? '炎热' : '寒冷'} </h2>
+            }
+            //自定义方法 ：要用赋值语句+箭头函数（因为箭头函数没有自己的this指向，他指向外层的this)
+
+        }
+        // 渲染组件到页面 标签必须闭合
+        ReactDOM.render(<Wheather />, document.querySelector('.text'));
+        //1.react解析组件标签 找到了MyComponent组件
+        //2.发现了组件是使用类调用的，随后new出该类的实例，并通过该实例调用到原型对象的render方法。
+        //3.将render返回的虚拟DOM转化为正式DOM，呈现到页面上
+    </script>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="text"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于把jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        //  创建类式组件 首字母必须大写 必须继承React.Component
+        class Wheather extends React.Component {
+            state = { ishot: true };
+            render() {
+                return <h2 onClick={() => {
+                    this.setState({ ishot: !this.state.ishot })
+                }}> 今天天气很{this.state.ishot ? '炎热' : '寒冷'} </h2>
+            }
+        }
+        // 渲染组件到页面 标签必须闭合
+        ReactDOM.render(<Wheather />, document.querySelector('.text'));
+        //1.react解析组件标签 找到了MyComponent组件
+        //2.发现了组件是使用类调用的，随后new出该类的实例，并通过该实例调用到原型对象的render方法。
+        //3.将render返回的虚拟DOM转化为正式DOM，呈现到页面上
+    </script>
+</body>
+
+</html>

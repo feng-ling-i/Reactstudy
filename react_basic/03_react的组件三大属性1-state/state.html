@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="text"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于把jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        //  创建类式组件 首字母必须大写 必须继承React.Component
+        class Wheather extends React.Component {
+            //构造器调用一次
+            constructor(props) {
+                super(props)
+                this.state = { ishot: true };
+                //解决changeWheater中this指向问题
+                //bind改变函数中this的指向，返回一个新的函数
+                this.changeWheather = this.changeWheather.bind(this)
+            }
+            //必须重写render方法
+            //render在类的原型对象上，供实例化对象使用
+            //this指向该类的实例化对象，组件的实例化对象
+            //render 调用1+n次 第一次是初始化 n是更新的次数
+            render() {
+                return <h2 onClick={this.changeWheather}> 今天天气很{this.state.ishot ? '炎热' : '寒冷'} </h2>
+            }
+            //changeWheather是点几次调用几次
+            changeWheather() {
+                //请注意 使用setState更新state（这里是合并，不是替换）
+                this.setState({ ishot: !this.state.ishot })
+            }
+        }
+        // 渲染组件到页面 标签必须闭合
+        ReactDOM.render(<Wheather />, document.querySelector('.text'));
+        //1.react解析组件标签 找到了MyComponent组件
+        //2.发现了组件是使用类调用的，随后new出该类的实例，并通过该实例调用到原型对象的render方法。
+        //3.将render返回的虚拟DOM转化为正式DOM，呈现到页面上
+    </script>
+</body>
+
+</html>

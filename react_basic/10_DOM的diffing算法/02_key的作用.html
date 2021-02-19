@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<!-- React最推荐使用的方法 -->
+
+<body>
+    <div class="text"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/17.0.1/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../js/17.0.1/react-dom.development.js"></script>
+    <!-- 引入babel，用于把jsx转化为js -->
+    <script src="../js/17.0.1/babel.min.js"></script>
+    <script type="text/babel">
+        /*  慢动作回放----使用index索引值作为key
+                    初始数据：
+                            {id:1,name:'小张',age:18},
+                            {id:2,name:'小李',age:19},
+                    初始的虚拟DOM：
+                            <li key=0>小张---18<input type="text"/></li>
+                            <li key=1>小李---19<input type="text"/></li>
+                    更新后的数据：
+                            {id:3,name:'小王',age:20},
+                            {id:1,name:'小张',age:18},
+                            {id:2,name:'小李',age:19},
+                    更新数据后的虚拟DOM：
+                            <li key=0>小王---20<input type="text"/></li>
+                            <li key=1>小张---18<input type="text"/></li>
+                            <li key=2>小李---19<input type="text"/></li>
+            -----------------------------------------------------------------
+            慢动作回放----使用id唯一标识作为key
+                    初始数据：
+                            {id:1,name:'小张',age:18},
+                            {id:2,name:'小李',age:19},
+                    初始的虚拟DOM：
+                            <li key=1>小张---18<input type="text"/></li>
+                            <li key=2>小李---19<input type="text"/></li>
+                    更新后的数据：
+                            {id:3,name:'小王',age:20},
+                            {id:1,name:'小张',age:18},
+                            {id:2,name:'小李',age:19},
+                    更新数据后的虚拟DOM：
+                            <li key=3>小王---20<input type="text"/></li>
+                            <li key=1>小张---18<input type="text"/></li>
+                            <li key=2>小李---19<input type="text"/></li> */
+        class Person extends React.Component {
+            // 设置初始化状态
+            state = {
+                persons: [{ id: 1, name: "小张", age: 18 },
+                { id: 2, name: "小米", age: 18 },
+                { id: 3, name: "小王", age: 10 },
+                ]
+            }
+            add = () => {
+                let p = { id: this.state.persons.length + 1, name: "小寒", age: 18 }
+                this.setState({ persons: [p, ...this.state.persons] })
+            }
+            render() {
+                return (
+                    <div>
+                        <h1>人员情况(使用index作为key)</h1>
+                        <button onClick={this.add}>点击添加小韩</button>
+                        <ul>{
+                            this.state.persons.map((perObj, index) => {
+                                return <li key={index}>{perObj.name}-------{perObj.age} </li>
+
+                            })}
+                        </ul>
+                        <h1>人员情况(使用id作为key)</h1>
+                        <ul>{
+                            this.state.persons.map((perObj, index) => {
+                                return <li key={perObj.id}>{perObj.name}-------{perObj.age} </li>
+
+                            })}
+                        </ul>
+                    </div>
+                )
+            }
+        }
+        // 渲染组件到页面 标签必须闭合
+        ReactDOM.render(<Person />, document.querySelector('.text'));
+        //1.react解析组件标签 找到了MyComponent组件
+        //2.发现了组件是使用类调用的，随后new出该类的实例，并通过该实例调用到原型对象的render方法。
+        //3.将render返回的虚拟DOM转化为正式DOM，呈现到页面上
+    </script>
+</body>
+
+</html>

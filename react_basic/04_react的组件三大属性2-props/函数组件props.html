@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="text"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于把jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+    <!-- 引入PropsTypes 对组件标签进行限制  -->
+    <script src="../js/prop-types.js"></script>
+    <script type="text/babel">
+        //  创建函数式组件 首字母必须大写
+        function Person(props) {
+            const { name, sex, age } = props
+            return (
+                <ul>
+                    <li>姓名：{name}</li>
+                    <li>性别：{sex}</li>
+                    <li>年龄：{age + 1}</li>
+                </ul>
+            )
+        }
+        Person.propTypes = {
+            //要求姓名必须是字符串且必须存在(string,number,func)
+            name: PropTypes.string.isRequired,
+            sex: PropTypes.string,
+            age: PropTypes.number,
+        }
+        //对标签属性进行默认值设定
+        Person.defaultProps = {
+            sex: "不男不女"
+        }
+        // 渲染组件到页面 标签必须闭合
+        ReactDOM.render(<Person name="喜羊羊" age={18} />, document.querySelector('.text'));
+        //2.发现了组件是使用函数调用的，随后返回该函数，将返回的虚拟DOM转化为正式DOM，呈现到页面上
+    </script>
+</body>
+
+</html>

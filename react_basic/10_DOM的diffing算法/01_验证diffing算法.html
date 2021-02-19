@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<!-- React最推荐使用的方法 -->
+
+<body>
+    <div class="text"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/17.0.1/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../js/17.0.1/react-dom.development.js"></script>
+    <!-- 引入babel，用于把jsx转化为js -->
+    <script src="../js/17.0.1/babel.min.js"></script>
+    <script type="text/babel">
+        class Time extends React.Component {
+            // 设置初始化状态
+            state = { timer: new Date() }
+            componentDidMount() {
+                setInterval(() => {
+                    this.setState({ timer: new Date() })
+                    console.log(this.state.timer)
+                }, 1000)
+            }
+            render() {
+                return (
+                    <div>
+                        <h1>hello</h1>
+                        <input type="text" />
+                        <span>现在是时间是：{this.state.timer.toTimeString()}</span>
+                    </div>
+                )
+            }
+        }
+        // 渲染组件到页面 标签必须闭合
+        ReactDOM.render(<Time />, document.querySelector('.text'));
+        //1.react解析组件标签 找到了MyComponent组件
+        //2.发现了组件是使用类调用的，随后new出该类的实例，并通过该实例调用到原型对象的render方法。
+        //3.将render返回的虚拟DOM转化为正式DOM，呈现到页面上
+    </script>
+</body>
+
+</html>

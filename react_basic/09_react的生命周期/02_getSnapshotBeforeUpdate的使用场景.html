@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .newslist {
+            width: 200px;
+            height: 200px;
+            background-color: aquamarine;
+            overflow: auto;
+        }
+
+        .news {
+            height: 40px;
+        }
+    </style>
+</head>
+<!-- React最推荐使用的方法 -->
+
+<body>
+    <div class="text"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="../js/17.0.1/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="../js/17.0.1/react-dom.development.js"></script>
+    <!-- 引入babel，用于把jsx转化为js -->
+    <script src="../js/17.0.1/babel.min.js"></script>
+    <script type="text/babel">
+        class NewsList extends React.Component {
+            // 设置初始化状态
+            state = { newsArray: [] }
+            componentDidMount() {
+                setInterval(() => {
+                    // 获取当前的状态
+                    const { newsArray } = this.state
+                    // 模拟当前新闻
+                    const news = '新闻' + (newsArray.length + 1)
+                    // 得到新的状态
+                    this.setState({ newsArray: [news, ...newsArray] })
+
+                }, 1000)
+            }
+            render() {
+                return (
+                    <div className="newslist" ref="list">
+                        {
+                            this.state.newsArray.map((n, key) => {
+                                return <div key={key} className="news">{n}</div>
+                            })
+                        }
+                    </div>
+                )
+            }
+            //获取还没有更新前的所有新闻的高度
+            //这里返回一个snapshot可以传递给componentDidUpdate
+            getSnapshotBeforeUpdate() {
+                return this.refs.list.scrollHeight
+            }
+            //用更新前的新闻的高度-更新后的新闻的高度=卷去的页面高度
+            componentDidUpdate(preProps, preState, height) {
+                this.refs.list.scrollTop += this.refs.list.scrollHeight - height
+            }
+        }
+        // 渲染组件到页面 标签必须闭合
+        ReactDOM.render(<NewsList />, document.querySelector('.text'));
+        //1.react解析组件标签 找到了MyComponent组件
+        //2.发现了组件是使用类调用的，随后new出该类的实例，并通过该实例调用到原型对象的render方法。
+        //3.将render返回的虚拟DOM转化为正式DOM，呈现到页面上
+    </script>
+</body>
+
+</html>
